@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import _ from 'lodash';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
+const students=[
+  {id: '12', name: 'Ama', score:23},
+  {id: '18', name: 'Mama', score:27},
+  {id: '20', name: 'nisshin', score:30}
+]
+  const StudentLine =(props) => (
+    <div>{props.id} {props.name} = {props.score}</div>
+  )
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        {
+          _.map(students,student =><StudentLine {...student}/>)
+        }
+        
       </div>
     );
   }
