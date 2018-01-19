@@ -13,18 +13,37 @@ const students=[
   {id: '18', name: 'Mama', score:27},
   {id: '20', name: 'nisshin', score:30}
 ]
-  const StudentLine =(props) => (
-    <div>{props.id} {props.name} = {props.score}</div>
+
+const Home = () => (<div>Home</div>)
+const Students = () => (
+  <div>
+    {
+      _.map(students, s => <StudentLink {...s} key={s.id}/>)
+    }
+    <Route path="/students/:id" component={StudentContainer}/>
+  </div>
+)
+const StudentContainer = ({match}) => {
+  let s = _.find(students, ['id', match.params.id])
+  return (
+    <StudentLine {...s} key={s.id}/>
   )
+}
+const StudentLink = ({id, name}) => (
+  <div><Link to={`/students/${id}`}>{name}</Link></div>
+)
+const StudentLine = ({id, name, score}) => (
+  <div>{id} {name} = {score}</div>
+)
 class App extends Component {
   render() {
     return (
-      <div>
-        {
-          _.map(students,student =><StudentLine {...student}/>)
-        }
-        
-      </div>
+      <Router>
+        <div>
+          <Route exact path="/" component={Home}/>
+          <Route path="/students" component={Students}/> 
+        </div>       
+      </Router>
     );
   }
 }
